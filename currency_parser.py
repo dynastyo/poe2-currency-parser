@@ -5,12 +5,80 @@ from typing import Dict, List, Tuple
 # =============================================================================
 # CONFIGURATION - Add your URLs here
 # =============================================================================
+
+# Minimum exalted value - only items >= this value will be included
+MINIMUM_EXALTED_VALUE = 10  # Change this to your desired minimum
+MINIMUM_EXALTED_VALUE_CURRENCY = 1.0  # Minimum value specifically for currency
+
 # IMPORTANT: The first URL MUST be the currency URL that contains the exalted value
+# Format: (section_name, URL, output_format_template)
+# Available variables in template: {name}, {exalted_value}
 URLS = [
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Currency",  # MUST BE FIRST - contains exalted base value
-    # Add additional URLs below:
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Fragments",
-     "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Abyss",
+    (
+        "CURRENCY",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Currency",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "FRAGMENTS",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Fragments",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "ABYSS",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Abyss",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "UNCUT GEMS",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=UncutGems",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "LINEAGE SUPPORT GEMS",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=LineageSupportGems",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "ESSENCES",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Essences",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "ULTIMATUM",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ultimatum",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "TALISMANS",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Talismans",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "RUNES",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Runes",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "RITUAL",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ritual",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "EXPEDITION",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Expedition",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "DELIRIUM",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Delirium",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
+    (
+        "BREACH",
+        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Breach",
+        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+    ),
 ]
 # =============================================================================
 
@@ -22,13 +90,14 @@ def fetch_json_from_url(url: str) -> dict:
     return response.json()
 
 
-def calculate_exalted_values(data: dict, exalted_divine_value: float = None) -> List[Tuple[str, str, float]]:
+def calculate_exalted_values(data: dict, exalted_divine_value: float = None, min_value: float = 0) -> List[Tuple[str, str, float]]:
     """
     Calculate exalted values for all items.
     
     Args:
         data: JSON data containing items and their values
         exalted_divine_value: The divine value of exalted orb. If None, will try to find it in data.
+        min_value: Minimum exalted value to include (default: 0)
     
     Returns:
         List of tuples: (id, name, exalted_value)
@@ -58,27 +127,57 @@ def calculate_exalted_values(data: dict, exalted_divine_value: float = None) -> 
         # Calculate exalted value: item's divine value / exalted's divine value
         exalted_value = divine_value / exalted_divine_value
         
-        results.append((item_id, item_name, exalted_value))
+        # Only include items that meet the minimum value threshold
+        if exalted_value >= min_value:
+            results.append((item_id, item_name, exalted_value))
     
     return results
 
 
-def write_to_txt(results: List[Tuple[str, str, float]], output_file: str):
-    """Write the results to a text file."""
+def create_section_header(section_name: str) -> str:
+    """Create a boxed section header."""
+    box_width = 85
+    line = "/" * box_width
+    
+    # Center the section name
+    padding = box_width - 4 - len(section_name)
+    left_pad = padding // 2
+    right_pad = padding - left_pad
+    
+    header = f"{line}\n"
+    header += f"//{' ' * (box_width - 4)}//\n"
+    header += f"//{' ' * left_pad}{section_name}{' ' * right_pad}//\n"
+    header += f"//{' ' * (box_width - 4)}//\n"
+    header += f"{line}\n"
+    
+    return header
+
+
+def write_to_txt(results_by_section: List[Tuple[str, List[Tuple[str, str, float, str]]]], output_file: str):
+    """Write the results to a text file with custom format and section headers."""
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write("Currency Exchange Rates (in Exalted Orbs)\n")
-        f.write("=" * 60 + "\n\n")
+        f.write("=" * 85 + "\n\n")
         
-        for item_id, item_name, exalted_value in results:
-            f.write(f"{item_name}: {exalted_value:.10f} Exalted\n")
+        for section_name, section_results in results_by_section:
+            # Write section header
+            f.write(create_section_header(section_name))
+            f.write("\n")
+            
+            # Write items in this section
+            for item_id, item_name, exalted_value, formatted_line in section_results:
+                f.write(f"{formatted_line}\n")
+            
+            # Add spacing between sections
+            f.write("\n")
 
 
-def process_all_urls(urls: List[str] = None, output_file: str = "currency_exalted_values.txt"):
+def process_all_urls(urls: List[Tuple[str, str, str]] = None, output_file: str = "currency_exalted_values.txt"):
     """
     Process multiple URLs. First URL must contain exalted currency data.
     
     Args:
-        urls: List of URLs to fetch. First URL must be the currency URL.
+        urls: List of tuples (section_name, URL, format_template) to fetch. First URL must be the currency URL.
         output_file: Path to output text file.
     """
     if urls is None or len(urls) == 0:
@@ -87,10 +186,21 @@ def process_all_urls(urls: List[str] = None, output_file: str = "currency_exalte
     if len(urls) == 0:
         raise ValueError("No URLs configured. Please add URLs to the URLS list in the script.")
     
-    all_results = []
+    results_by_section = []
     exalted_divine_value = None
     
-    for i, url in enumerate(urls):
+    for i, url_config in enumerate(urls):
+        # Handle both tuple (section_name, url, format) and older formats for backwards compatibility
+        if isinstance(url_config, tuple) and len(url_config) == 3:
+            section_name, url, format_template = url_config
+        elif isinstance(url_config, tuple) and len(url_config) == 2:
+            url, format_template = url_config
+            section_name = f"SECTION {i+1}"
+        else:
+            url = url_config
+            format_template = '{name}: {exalted_value:.10f} Exalted'
+            section_name = f"SECTION {i+1}"
+        
         try:
             print(f"\n[{i+1}/{len(urls)}] Fetching data from {url}...")
             data = fetch_json_from_url(url)
@@ -108,10 +218,29 @@ def process_all_urls(urls: List[str] = None, output_file: str = "currency_exalte
                     raise ValueError("First URL must contain exalted currency data!")
             
             print(f"Calculating exalted values using base value: {exalted_divine_value}...")
-            # Pass the exalted_divine_value to all subsequent URLs
-            results = calculate_exalted_values(data, exalted_divine_value)
-            all_results.extend(results)
-            print(f"✓ Processed {len(results)} items from this URL")
+            
+            # Use different minimum value for currency (first URL)
+            if section_name == "CURRENCY":
+                min_value = MINIMUM_EXALTED_VALUE_CURRENCY
+                print(f"Applying minimum value filter: {min_value} Ex (Currency)")
+            else:
+                min_value = MINIMUM_EXALTED_VALUE
+                print(f"Applying minimum value filter: {min_value} Ex")
+            
+            # Pass the exalted_divine_value and minimum value to all URLs
+            results = calculate_exalted_values(data, exalted_divine_value, min_value)
+            
+            # Format each result according to the URL's template
+            formatted_results = []
+            for item_id, item_name, exalted_value in results:
+                formatted_line = format_template.format(
+                    name=item_name,
+                    exalted_value=f"{exalted_value:.2f}"
+                )
+                formatted_results.append((item_id, item_name, exalted_value, formatted_line))
+            
+            results_by_section.append((section_name, formatted_results))
+            print(f"✓ Processed {len(formatted_results)} items from this URL (after filtering)")
             
         except requests.exceptions.RequestException as e:
             print(f"✗ Error fetching data from {url}: {e}")
@@ -124,15 +253,16 @@ def process_all_urls(urls: List[str] = None, output_file: str = "currency_exalte
                 raise
             continue
     
-    if len(all_results) > 0:
-        print(f"\n{'='*60}")
+    if len(results_by_section) > 0:
+        total_items = sum(len(section_results) for _, section_results in results_by_section)
+        print(f"\n{'='*85}")
         print(f"Writing all results to {output_file}...")
-        write_to_txt(all_results, output_file)
+        write_to_txt(results_by_section, output_file)
         print(f"✓ Success! Results written to {output_file}")
-        print(f"✓ Total items processed: {len(all_results)}")
-        print(f"{'='*60}\n")
+        print(f"✓ Total items processed: {total_items}")
+        print(f"{'='*85}\n")
     
-    return all_results
+    return results_by_section
 
 
 def main(url: str = None, output_file: str = "currency_exalted_values.txt"):
