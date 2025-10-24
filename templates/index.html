@@ -12,10 +12,10 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: #fff;
-            padding: 20px;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #000000;
+            padding: 24px;
             min-height: 100vh;
         }
 
@@ -26,97 +26,109 @@
 
         h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 400;
+            color: #000000;
+            letter-spacing: -0.5px;
         }
 
         .config-panel {
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid #4a90e2;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #4a90e2;
+            font-size: 0.875em;
+            font-weight: 500;
+            color: #000000;
+            letter-spacing: 0.1px;
         }
 
         input[type="number"] {
             width: 100%;
-            padding: 12px;
-            font-size: 1.1em;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #4a90e2;
-            border-radius: 5px;
-            color: #fff;
-            font-family: 'Courier New', monospace;
+            padding: 16px;
+            font-size: 1em;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            color: #000000;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        input[type="number"]:hover {
+            border-color: rgb(96, 126, 237);
         }
 
         input[type="number"]:focus {
             outline: none;
-            border-color: #66b3ff;
-            background: rgba(255, 255, 255, 0.15);
+            border-color: rgb(96, 126, 237);
+            border-width: 2px;
+            padding: 15px;
         }
 
         .button-container {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 32px;
         }
 
         button {
-            padding: 15px 50px;
-            font-size: 1.3em;
-            font-weight: bold;
-            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-            color: #fff;
+            padding: 16px 48px;
+            font-size: 0.875em;
+            font-weight: 500;
+            background: rgb(231, 242, 86);
+            color: #000000;
             border: none;
-            border-radius: 8px;
+            border-radius: 24px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            font-family: 'Courier New', monospace;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            font-family: 'Roboto', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         button:hover {
-            background: linear-gradient(135deg, #357abd 0%, #2a5298 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            background: rgb(221, 232, 76);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
         }
 
         button:active {
-            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
         }
 
         button:disabled {
-            background: #666;
+            background: #e0e0e0;
+            color: #9e9e9e;
             cursor: not-allowed;
-            transform: none;
+            box-shadow: none;
         }
 
         .console {
-            background: #1a1a1a;
-            border: 2px solid #4a90e2;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
+            background: #000000;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
             min-height: 400px;
             max-height: 600px;
             overflow-y: auto;
-            font-size: 0.95em;
-            line-height: 1.5;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            font-size: 0.875em;
+            line-height: 1.6;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             display: none;
+            font-family: 'Courier New', monospace;
         }
 
         .console.active {
@@ -126,33 +138,33 @@
         .console-output {
             white-space: pre-wrap;
             word-break: break-word;
-            color: #0f0;
+            color: #ffffff;
         }
 
         .console-log {
-            color: #4a90e2;
-            margin-bottom: 5px;
+            color: #9e9e9e;
+            margin-bottom: 4px;
         }
 
         .console-error {
-            color: #ff4444;
-            font-weight: bold;
+            color: #ff5252;
+            font-weight: 500;
         }
 
         .console-success {
-            color: #44ff44;
-            font-weight: bold;
+            color: rgb(96, 126, 237);
+            font-weight: 500;
         }
 
         .spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
             border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-            margin-left: 10px;
+            border-top-color: #000000;
+            animation: spin 0.8s ease-in-out infinite;
+            margin-left: 8px;
         }
 
         @keyframes spin {
@@ -160,39 +172,45 @@
         }
 
         .download-btn {
-            padding: 10px 30px;
-            font-size: 1em;
-            margin-top: 15px;
-            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            padding: 12px 32px;
+            font-size: 0.875em;
+            margin-bottom: 16px;
+            background: rgb(96, 126, 237);
+            color: #ffffff;
+            display: none;
+        }
+
+        .download-btn.visible {
+            display: inline-block;
         }
 
         .download-btn:hover {
-            background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+            background: rgb(86, 116, 227);
         }
 
         .info-text {
-            color: #aaa;
-            font-size: 0.9em;
-            margin-top: 5px;
-            font-style: italic;
+            color: #757575;
+            font-size: 0.75em;
+            margin-top: 6px;
+            font-weight: 400;
         }
 
         /* Scrollbar styling */
         .console::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
 
         .console::-webkit-scrollbar-track {
-            background: #0a0a0a;
+            background: #1a1a1a;
         }
 
         .console::-webkit-scrollbar-thumb {
-            background: #4a90e2;
-            border-radius: 5px;
+            background: rgb(96, 126, 237);
+            border-radius: 4px;
         }
 
         .console::-webkit-scrollbar-thumb:hover {
-            background: #357abd;
+            background: rgb(86, 116, 227);
         }
     </style>
 </head>
@@ -221,12 +239,12 @@
         </div>
 
         <div id="console" class="console">
-            <div id="consoleOutput"></div>
             <div class="button-container">
-                <button class="download-btn" onclick="downloadResult()">
+                <button id="downloadBtn" class="download-btn" onclick="downloadResult()">
                     📥 Download Results
                 </button>
             </div>
+            <div id="consoleOutput"></div>
         </div>
     </div>
 
@@ -265,13 +283,12 @@
             consoleEl.classList.add('active');
             clearConsole();
             
+            // Hide download button
+            document.getElementById('downloadBtn').classList.remove('visible');
+            
             // Disable button and show loading
             startBtn.disabled = true;
             startBtn.innerHTML = 'Processing<span class="spinner"></span>';
-            
-            addConsoleLog('Starting currency parser...', 'log');
-            addConsoleLog(`Settings: Min Value = ${minValue} Ex, Currency Min = ${minValueCurrency} Ex`, 'log');
-            addConsoleLog('', 'log');
             
             try {
                 const response = await fetch('/process', {
@@ -288,24 +305,7 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    // Display logs
-                    data.logs.forEach(log => {
-                        if (log.includes('✓')) {
-                            addConsoleLog(log, 'success');
-                        } else if (log.includes('✗')) {
-                            addConsoleLog(log, 'error');
-                        } else {
-                            addConsoleLog(log, 'log');
-                        }
-                    });
-                    
-                    addConsoleLog('', 'log');
-                    addConsoleLog('='.repeat(85), 'success');
-                    addConsoleLog('FINAL OUTPUT:', 'success');
-                    addConsoleLog('='.repeat(85), 'success');
-                    addConsoleLog('', 'log');
-                    
-                    // Display result
+                    // Only display the final result (not the processing logs)
                     const resultDiv = document.createElement('div');
                     resultDiv.className = 'console-output';
                     resultDiv.textContent = data.result;
@@ -313,6 +313,9 @@
                     
                     // Store result for download
                     currentResult = data.result;
+                    
+                    // Show download button
+                    document.getElementById('downloadBtn').classList.add('visible');
                     
                 } else {
                     addConsoleLog(`Error: ${data.error}`, 'error');

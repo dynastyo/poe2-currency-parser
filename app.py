@@ -165,8 +165,6 @@ def process_all_urls(min_value: float, min_value_currency: float, log_callback=N
     
     # Generate final formatted output
     final_output = StringIO()
-    final_output.write("Currency Exchange Rates (in Exalted Orbs)\n")
-    final_output.write("=" * 85 + "\n\n")
     
     total_items = 0
     for section_name, section_results in results_by_section:
