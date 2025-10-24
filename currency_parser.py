@@ -10,75 +10,26 @@ from typing import Dict, List, Tuple
 MINIMUM_EXALTED_VALUE = 10  # Change this to your desired minimum
 MINIMUM_EXALTED_VALUE_CURRENCY = 1.0  # Minimum value specifically for currency
 
+# Output format template - same for all URLs
+# Available variables: {name}, {exalted_value}
+OUTPUT_FORMAT = '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
+
 # IMPORTANT: The first URL MUST be the currency URL that contains the exalted value
-# Format: (section_name, URL, output_format_template)
-# Available variables in template: {name}, {exalted_value}
+# Section name will be extracted from overviewName parameter (e.g., "Currency", "Fragments")
 URLS = [
-    (
-        "CURRENCY",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Currency",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "FRAGMENTS",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Fragments",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "ABYSS",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Abyss",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "UNCUT GEMS",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=UncutGems",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "LINEAGE SUPPORT GEMS",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=LineageSupportGems",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "ESSENCES",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Essences",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "ULTIMATUM",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ultimatum",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "TALISMANS",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Talismans",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "RUNES",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Runes",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "RITUAL",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ritual",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "EXPEDITION",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Expedition",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "DELIRIUM",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Delirium",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
-    (
-        "BREACH",
-        "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Breach",
-        '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalted_value}'
-    ),
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Currency",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Fragments",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Abyss",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=UncutGems",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=LineageSupportGems",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Essences",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ultimatum",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Talismans",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Runes",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ritual",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Expedition",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Delirium",
+    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Breach",
 ]
 # =============================================================================
 
@@ -172,12 +123,25 @@ def write_to_txt(results_by_section: List[Tuple[str, List[Tuple[str, str, float,
             f.write("\n")
 
 
-def process_all_urls(urls: List[Tuple[str, str, str]] = None, output_file: str = "currency_exalted_values.txt"):
+def extract_section_name_from_url(url: str) -> str:
+    """Extract the section name from the overviewName parameter in the URL."""
+    import re
+    match = re.search(r'overviewName=([^&]+)', url)
+    if match:
+        # Convert CamelCase to UPPER CASE WITH SPACES
+        overview_name = match.group(1)
+        # Insert space before capital letters and convert to uppercase
+        section_name = re.sub(r'(?<!^)(?=[A-Z])', ' ', overview_name).upper()
+        return section_name
+    return "UNKNOWN SECTION"
+
+
+def process_all_urls(urls: List[str] = None, output_file: str = "currency_exalted_values.txt"):
     """
     Process multiple URLs. First URL must contain exalted currency data.
     
     Args:
-        urls: List of tuples (section_name, URL, format_template) to fetch. First URL must be the currency URL.
+        urls: List of URLs to fetch. First URL must be the currency URL.
         output_file: Path to output text file.
     """
     if urls is None or len(urls) == 0:
@@ -189,17 +153,10 @@ def process_all_urls(urls: List[Tuple[str, str, str]] = None, output_file: str =
     results_by_section = []
     exalted_divine_value = None
     
-    for i, url_config in enumerate(urls):
-        # Handle both tuple (section_name, url, format) and older formats for backwards compatibility
-        if isinstance(url_config, tuple) and len(url_config) == 3:
-            section_name, url, format_template = url_config
-        elif isinstance(url_config, tuple) and len(url_config) == 2:
-            url, format_template = url_config
-            section_name = f"SECTION {i+1}"
-        else:
-            url = url_config
-            format_template = '{name}: {exalted_value:.10f} Exalted'
-            section_name = f"SECTION {i+1}"
+    for i, url in enumerate(urls):
+        # Extract section name from URL
+        section_name = extract_section_name_from_url(url)
+        format_template = OUTPUT_FORMAT
         
         try:
             print(f"\n[{i+1}/{len(urls)}] Fetching data from {url}...")
