@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoE2 Currency Parser</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .config-panel {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #4a90e2;
+            border-radius: 5px;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #66b3ff;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-family: 'Courier New', monospace;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #357abd 0%, #2a5298 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .console {
+            background: #1a1a1a;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+            font-size: 0.95em;
+            line-height: 1.5;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .console.active {
+            display: block;
+        }
+
+        .console-output {
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #0f0;
+        }
+
+        .console-log {
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+
+        .console-error {
+            color: #ff4444;
+            font-weight: bold;
+        }
+
+        .console-success {
+            color: #44ff44;
+            font-weight: bold;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .download-btn {
+            padding: 10px 30px;
+            font-size: 1em;
+            margin-top: 15px;
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+        }
+
+        .info-text {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Scrollbar styling */
+        .console::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .console::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        .console::-webkit-scrollbar-thumb {
+            background: #4a90e2;
+            border-radius: 5px;
+        }
+
+        .console::-webkit-scrollbar-thumb:hover {
+            background: #357abd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ PoE2 Currency Parser ⚔️</h1>
+        
+        <div class="config-panel">
+            <div class="input-group">
+                <label for="min_value">Minimum Exalted Value (General):</label>
+                <input type="number" id="min_value" value="10" step="0.1" min="0">
+                <p class="info-text">Minimum exalted value for Fragments, Abyss, Gems, etc.</p>
+            </div>
+            
+            <div class="input-group">
+                <label for="min_value_currency">Minimum Exalted Value (Currency):</label>
+                <input type="number" id="min_value_currency" value="1" step="0.1" min="0">
+                <p class="info-text">Minimum exalted value specifically for currency items</p>
+            </div>
+            
+            <div class="button-container">
+                <button id="startBtn" onclick="startProcessing()">
+                    Start Processing
+                </button>
+            </div>
+        </div>
+
+        <div id="console" class="console">
+            <div id="consoleOutput"></div>
+            <div class="button-container">
+                <button class="download-btn" onclick="downloadResult()">
+                    📥 Download Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentResult = '';
+
+        function addConsoleLog(message, type = 'log') {
+            const consoleOutput = document.getElementById('consoleOutput');
+            const div = document.createElement('div');
+            div.className = `console-${type}`;
+            div.textContent = message;
+            consoleOutput.appendChild(div);
+            
+            // Auto-scroll to bottom
+            const consoleEl = document.getElementById('console');
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function clearConsole() {
+            document.getElementById('consoleOutput').innerHTML = '';
+        }
+
+        async function startProcessing() {
+            const minValue = parseFloat(document.getElementById('min_value').value);
+            const minValueCurrency = parseFloat(document.getElementById('min_value_currency').value);
+            const startBtn = document.getElementById('startBtn');
+            const consoleEl = document.getElementById('console');
+            
+            // Validate inputs
+            if (isNaN(minValue) || isNaN(minValueCurrency)) {
+                alert('Please enter valid numbers for minimum values');
+                return;
+            }
+            
+            // Show console and clear previous output
+            consoleEl.classList.add('active');
+            clearConsole();
+            
+            // Disable button and show loading
+            startBtn.disabled = true;
+            startBtn.innerHTML = 'Processing<span class="spinner"></span>';
+            
+            addConsoleLog('Starting currency parser...', 'log');
+            addConsoleLog(`Settings: Min Value = ${minValue} Ex, Currency Min = ${minValueCurrency} Ex`, 'log');
+            addConsoleLog('', 'log');
+            
+            try {
+                const response = await fetch('/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        min_value: minValue,
+                        min_value_currency: minValueCurrency
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Display logs
+                    data.logs.forEach(log => {
+                        if (log.includes('✓')) {
+                            addConsoleLog(log, 'success');
+                        } else if (log.includes('✗')) {
+                            addConsoleLog(log, 'error');
+                        } else {
+                            addConsoleLog(log, 'log');
+                        }
+                    });
+                    
+                    addConsoleLog('', 'log');
+                    addConsoleLog('='.repeat(85), 'success');
+                    addConsoleLog('FINAL OUTPUT:', 'success');
+                    addConsoleLog('='.repeat(85), 'success');
+                    addConsoleLog('', 'log');
+                    
+                    // Display result
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'console-output';
+                    resultDiv.textContent = data.result;
+                    document.getElementById('consoleOutput').appendChild(resultDiv);
+                    
+                    // Store result for download
+                    currentResult = data.result;
+                    
+                } else {
+                    addConsoleLog(`Error: ${data.error}`, 'error');
+                }
+                
+            } catch (error) {
+                addConsoleLog(`Fatal error: ${error.message}`, 'error');
+            } finally {
+                // Re-enable button
+                startBtn.disabled = false;
+                startBtn.innerHTML = 'Start Processing';
+            }
+        }
+
+        function downloadResult() {
+            if (!currentResult) {
+                alert('No results to download. Please run the parser first.');
+                return;
+            }
+            
+            const blob = new Blob([currentResult], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'currency_exalted_values.txt';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            
+            addConsoleLog('✓ Results downloaded successfully!', 'success');
+        }
+
+        // Allow Enter key to start processing
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' && !document.getElementById('startBtn').disabled) {
+                startProcessing();
+            }
+        });
+    </script>
+</body>
+</html>

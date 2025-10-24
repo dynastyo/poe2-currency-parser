@@ -1,0 +1,316 @@
+Currency Exchange Rates (in Exalted Orbs)
+=====================================================================================
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                    CURRENCY                                     //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Exalted Orb" # [StashItem] == "true" // ExValue = 1.00
+[Type] == "Orb of Annulment" # [StashItem] == "true" // ExValue = 459.74
+[Type] == "Chaos Orb" # [StashItem] == "true" // ExValue = 51.59
+[Type] == "Orb of Chance" # [StashItem] == "true" // ExValue = 4.27
+[Type] == "Divine Orb" # [StashItem] == "true" // ExValue = 1230.15
+[Type] == "Fracturing Orb" # [StashItem] == "true" // ExValue = 542.77
+[Type] == "Perfect Chaos Orb" # [StashItem] == "true" // ExValue = 3432.53
+[Type] == "Perfect Exalted Orb" # [StashItem] == "true" // ExValue = 3372.18
+[Type] == "Perfect Jeweller's Orb" # [StashItem] == "true" // ExValue = 36.88
+[Type] == "Perfect Regal Orb" # [StashItem] == "true" // ExValue = 32.51
+[Type] == "Hinekora's Lock" # [StashItem] == "true" // ExValue = 754749.60
+[Type] == "Gemcutter's Prism" # [StashItem] == "true" // ExValue = 1.01
+[Type] == "Greater Chaos Orb" # [StashItem] == "true" // ExValue = 170.17
+[Type] == "Greater Exalted Orb" # [StashItem] == "true" // ExValue = 2.67
+[Type] == "Mirror of Kalandra" # [StashItem] == "true" // ExValue = 2065742.15
+[Type] == "Perfect Orb of Augmentation" # [StashItem] == "true" // ExValue = 1.88
+[Type] == "Transmutation Shard" # [StashItem] == "true" // ExValue = 7.00
+[Type] == "Vaal Orb" # [StashItem] == "true" // ExValue = 1.32
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                    FRAGMENTS                                    //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Ancient Crisis Fragment" # [StashItem] == "true" // ExValue = 413.43
+[Type] == "Cowardly Fate" # [StashItem] == "true" // ExValue = 90.61
+[Type] == "Deadly Fate" # [StashItem] == "true" // ExValue = 97.58
+[Type] == "Primary Calamity Fragment" # [StashItem] == "true" // ExValue = 2913.99
+[Type] == "Runic Splinter" # [StashItem] == "true" // ExValue = 15.29
+[Type] == "Secondary Calamity Fragment" # [StashItem] == "true" // ExValue = 2155.94
+[Type] == "Tertiary Calamity Fragment" # [StashItem] == "true" // ExValue = 2151.46
+[Type] == "Weathered Crisis Fragment" # [StashItem] == "true" // ExValue = 632.46
+[Type] == "Zarokh's Reliquary Key: Against the Darkness" # [StashItem] == "true" // ExValue = 38380.72
+[Type] == "Olroth's Reliquary Key" # [StashItem] == "true" // ExValue = 10492.47
+[Type] == "Tangmazu's Reliquary Key" # [StashItem] == "true" // ExValue = 5214.16
+[Type] == "Faded Crisis Fragment" # [StashItem] == "true" // ExValue = 392.48
+[Type] == "Azmeri Reliquary Key" # [StashItem] == "true" // ExValue = 157459.35
+[Type] == "Ritualistic Reliquary Key" # [StashItem] == "true" // ExValue = 64.38
+[Type] == "The Arbiter's Reliquary Key" # [StashItem] == "true" // ExValue = 8918.60
+[Type] == "Victorious Fate" # [StashItem] == "true" // ExValue = 73.96
+[Type] == "Xesht's Reliquary Key" # [StashItem] == "true" // ExValue = 216.86
+[Type] == "The Trialmaster's Reliquary Key" # [StashItem] == "true" // ExValue = 41825.14
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                      ABYSS                                      //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Kulemak's Invitation" # [StashItem] == "true" // ExValue = 18.07
+[Type] == "Ancient Collarbone" # [StashItem] == "true" // ExValue = 8288.88
+[Type] == "Ancient Jawbone" # [StashItem] == "true" // ExValue = 5955.18
+[Type] == "Ancient Rib" # [StashItem] == "true" // ExValue = 3338.98
+[Type] == "Preserved Cranium" # [StashItem] == "true" // ExValue = 19.14
+[Type] == "Preserved Vertebrae" # [StashItem] == "true" // ExValue = 11.56
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                   UNCUT GEMS                                    //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Uncut Skill Gem (Level 5)" # [StashItem] == "true" // ExValue = 45.70
+[Type] == "Uncut Skill Gem (Level 7)" # [StashItem] == "true" // ExValue = 66.86
+[Type] == "Uncut Skill Gem (Level 8)" # [StashItem] == "true" // ExValue = 42.98
+[Type] == "Uncut Skill Gem (Level 9)" # [StashItem] == "true" // ExValue = 27.86
+[Type] == "Uncut Spirit Gem (Level 12)" # [StashItem] == "true" // ExValue = 17.23
+[Type] == "Uncut Spirit Gem (Level 15)" # [StashItem] == "true" // ExValue = 102.61
+[Type] == "Uncut Spirit Gem (Level 18)" # [StashItem] == "true" // ExValue = 24.05
+[Type] == "Uncut Spirit Gem (Level 19)" # [StashItem] == "true" // ExValue = 26.09
+[Type] == "Uncut Spirit Gem (Level 4)" # [StashItem] == "true" // ExValue = 187.79
+[Type] == "Uncut Spirit Gem (Level 5)" # [StashItem] == "true" // ExValue = 80.31
+[Type] == "Uncut Spirit Gem (Level 6)" # [StashItem] == "true" // ExValue = 85.63
+[Type] == "Uncut Skill Gem (Level 6)" # [StashItem] == "true" // ExValue = 27.56
+[Type] == "Uncut Skill Gem (Level 10)" # [StashItem] == "true" // ExValue = 16.58
+[Type] == "Uncut Skill Gem (Level 11)" # [StashItem] == "true" // ExValue = 13.09
+[Type] == "Uncut Skill Gem (Level 1)" # [StashItem] == "true" // ExValue = 62.76
+[Type] == "Uncut Skill Gem (Level 20)" # [StashItem] == "true" // ExValue = 138.29
+[Type] == "Uncut Spirit Gem (Level 10)" # [StashItem] == "true" // ExValue = 82.31
+[Type] == "Uncut Spirit Gem (Level 11)" # [StashItem] == "true" // ExValue = 25.85
+[Type] == "Uncut Spirit Gem (Level 13)" # [StashItem] == "true" // ExValue = 32.84
+[Type] == "Uncut Spirit Gem (Level 14)" # [StashItem] == "true" // ExValue = 105.29
+[Type] == "Uncut Spirit Gem (Level 16)" # [StashItem] == "true" // ExValue = 78.17
+[Type] == "Uncut Spirit Gem (Level 17)" # [StashItem] == "true" // ExValue = 18.12
+[Type] == "Uncut Spirit Gem (Level 20)" # [StashItem] == "true" // ExValue = 4984.93
+[Type] == "Uncut Spirit Gem (Level 7)" # [StashItem] == "true" // ExValue = 93.18
+[Type] == "Uncut Spirit Gem (Level 8)" # [StashItem] == "true" // ExValue = 811.67
+[Type] == "Uncut Spirit Gem (Level 9)" # [StashItem] == "true" // ExValue = 292.82
+[Type] == "Uncut Support Gem (Level 3)" # [StashItem] == "true" // ExValue = 11.28
+[Type] == "Uncut Support Gem (Level 4)" # [StashItem] == "true" // ExValue = 35.49
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                              LINEAGE SUPPORT GEMS                               //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Ailith's Chimes" # [StashItem] == "true" // ExValue = 33.04
+[Type] == "Arbiter's Ignition" # [StashItem] == "true" // ExValue = 19.22
+[Type] == "Arjun's Medal" # [StashItem] == "true" // ExValue = 125922.74
+[Type] == "Atalui's Bloodletting" # [StashItem] == "true" // ExValue = 24142.60
+[Type] == "Atziri's Allure" # [StashItem] == "true" // ExValue = 34.57
+[Type] == "Garukhan's Resolve" # [StashItem] == "true" // ExValue = 150.73
+[Type] == "Ixchel's Torment" # [StashItem] == "true" // ExValue = 480.27
+[Type] == "Piety's Mercy" # [StashItem] == "true" // ExValue = 22.79
+[Type] == "Rakiata's Flow" # [StashItem] == "true" // ExValue = 17704.49
+[Type] == "Rigwald's Ferocity" # [StashItem] == "true" // ExValue = 211.56
+[Type] == "Uhtred's Exodus" # [StashItem] == "true" // ExValue = 24.71
+[Type] == "Xoph's Pyre" # [StashItem] == "true" // ExValue = 35.85
+[Type] == "Dialla's Desire" # [StashItem] == "true" // ExValue = 37969.09
+[Type] == "Ratha's Assault" # [StashItem] == "true" // ExValue = 27678.40
+[Type] == "Uul-Netol's Embrace" # [StashItem] == "true" // ExValue = 18051.75
+[Type] == "Doedre's Undoing" # [StashItem] == "true" // ExValue = 49.94
+[Type] == "Esh's Radiance" # [StashItem] == "true" // ExValue = 122.76
+[Type] == "Tul's Stillness" # [StashItem] == "true" // ExValue = 45.56
+[Type] == "Uhtred's Augury" # [StashItem] == "true" // ExValue = 97144.66
+[Type] == "Uhtred's Omen" # [StashItem] == "true" // ExValue = 10553.40
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                    ESSENCES                                     //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Essence of Delirium" # [StashItem] == "true" // ExValue = 687.44
+[Type] == "Greater Essence of Opulence" # [StashItem] == "true" // ExValue = 13.37
+[Type] == "Perfect Essence of Abrasion" # [StashItem] == "true" // ExValue = 13.52
+[Type] == "Perfect Essence of Battle" # [StashItem] == "true" // ExValue = 40.54
+[Type] == "Perfect Essence of Electricity" # [StashItem] == "true" // ExValue = 17.32
+[Type] == "Perfect Essence of Enhancement" # [StashItem] == "true" // ExValue = 15.18
+[Type] == "Perfect Essence of Haste" # [StashItem] == "true" // ExValue = 43.06
+[Type] == "Perfect Essence of Opulence" # [StashItem] == "true" // ExValue = 13.45
+[Type] == "Perfect Essence of Thawing" # [StashItem] == "true" // ExValue = 24.60
+[Type] == "Essence of Ruin" # [StashItem] == "true" // ExValue = 123.02
+[Type] == "Lesser Essence of Command" # [StashItem] == "true" // ExValue = 1230.15
+[Type] == "Essence of Abrasion" # [StashItem] == "true" // ExValue = 45.64
+[Type] == "Essence of the Abyss" # [StashItem] == "true" // ExValue = 116.08
+[Type] == "Essence of Alacrity" # [StashItem] == "true" // ExValue = 615.08
+[Type] == "Essence of Command" # [StashItem] == "true" // ExValue = 102.51
+[Type] == "Essence of Grounding" # [StashItem] == "true" // ExValue = 22.00
+[Type] == "Essence of Haste" # [StashItem] == "true" // ExValue = 18.89
+[Type] == "Essence of Horror" # [StashItem] == "true" // ExValue = 3051.70
+[Type] == "Essence of Hysteria" # [StashItem] == "true" // ExValue = 719.36
+[Type] == "Essence of Opulence" # [StashItem] == "true" // ExValue = 128.43
+[Type] == "Essence of the Body" # [StashItem] == "true" // ExValue = 23.88
+[Type] == "Essence of Electricity" # [StashItem] == "true" // ExValue = 14.55
+[Type] == "Essence of Enhancement" # [StashItem] == "true" // ExValue = 25.67
+[Type] == "Lesser Essence of Opulence" # [StashItem] == "true" // ExValue = 26.00
+[Type] == "Greater Essence of Seeking" # [StashItem] == "true" // ExValue = 14.91
+[Type] == "Lesser Essence of Abrasion" # [StashItem] == "true" // ExValue = 24.00
+[Type] == "Lesser Essence of Electricity" # [StashItem] == "true" // ExValue = 100.00
+[Type] == "Lesser Essence of Haste" # [StashItem] == "true" // ExValue = 150.00
+[Type] == "Lesser Essence of Sorcery" # [StashItem] == "true" // ExValue = 22.09
+[Type] == "Lesser Essence of Flames" # [StashItem] == "true" // ExValue = 12.00
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                    ULTIMATUM                                    //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Atmohua's Soul Core of Retreat" # [StashItem] == "true" // ExValue = 67.87
+[Type] == "Cholotl's Soul Core of War" # [StashItem] == "true" // ExValue = 11.41
+[Type] == "Quipolatl's Soul Core of Flow" # [StashItem] == "true" // ExValue = 72.32
+[Type] == "Soul Core of Azcapa" # [StashItem] == "true" // ExValue = 539.54
+[Type] == "Soul Core of Citaqualotl" # [StashItem] == "true" // ExValue = 197.90
+[Type] == "Soul Core of Jiquani" # [StashItem] == "true" // ExValue = 7824.91
+[Type] == "Soul Core of Opiloti" # [StashItem] == "true" // ExValue = 89.35
+[Type] == "Soul Core of Puhuarte" # [StashItem] == "true" // ExValue = 170.52
+[Type] == "Soul Core of Tacati" # [StashItem] == "true" // ExValue = 141.96
+[Type] == "Soul Core of Ticaba" # [StashItem] == "true" // ExValue = 185.37
+[Type] == "Soul Core of Topotante" # [StashItem] == "true" // ExValue = 88.33
+[Type] == "Soul Core of Zantipi" # [StashItem] == "true" // ExValue = 175.74
+[Type] == "Topotante's Soul Core of Dampening" # [StashItem] == "true" // ExValue = 15.06
+[Type] == "Xopec's Soul Core of Power" # [StashItem] == "true" // ExValue = 12.16
+[Type] == "Estazunti's Soul Core of Convalescence" # [StashItem] == "true" // ExValue = 208.62
+[Type] == "Guatelitzi's Soul Core of Endurance" # [StashItem] == "true" // ExValue = 18.60
+[Type] == "Opiloti's Soul Core of Assault" # [StashItem] == "true" // ExValue = 16.80
+[Type] == "Soul Core of Atmohua" # [StashItem] == "true" // ExValue = 61.17
+[Type] == "Soul Core of Cholotl" # [StashItem] == "true" // ExValue = 53.75
+[Type] == "Soul Core of Quipolatl" # [StashItem] == "true" // ExValue = 181.60
+[Type] == "Soul Core of Tzamoto" # [StashItem] == "true" // ExValue = 56.93
+[Type] == "Soul Core of Xopec" # [StashItem] == "true" // ExValue = 65.71
+[Type] == "Soul Core of Zalatl" # [StashItem] == "true" // ExValue = 81.10
+[Type] == "Tzamoto's Soul Core of Ferocity" # [StashItem] == "true" // ExValue = 49.43
+[Type] == "Zalatl's Soul Core of Insulation" # [StashItem] == "true" // ExValue = 12.04
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                    TALISMANS                                    //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Talisman of Eeshta" # [StashItem] == "true" // ExValue = 52.44
+[Type] == "Talisman of Egrin" # [StashItem] == "true" // ExValue = 23.24
+[Type] == "Talisman of Ralakesh" # [StashItem] == "true" // ExValue = 33.35
+[Type] == "Talisman of Maxarius" # [StashItem] == "true" // ExValue = 10.00
+[Type] == "Fox Talisman" # [StashItem] == "true" // ExValue = 16.96
+[Type] == "Ox Talisman" # [StashItem] == "true" // ExValue = 17.09
+[Type] == "Rabbit Talisman" # [StashItem] == "true" // ExValue = 37.08
+[Type] == "Talisman of Sirrius" # [StashItem] == "true" // ExValue = 2746.49
+[Type] == "Talisman of Thruldana" # [StashItem] == "true" // ExValue = 17.44
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                      RUNES                                      //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Countess Seske's Rune of Archery" # [StashItem] == "true" // ExValue = 7252.23
+[Type] == "Courtesan Mannan's Rune of Cruelty" # [StashItem] == "true" // ExValue = 82.42
+[Type] == "Craiceann's Rune of Warding" # [StashItem] == "true" // ExValue = 13.82
+[Type] == "Farrul's Rune of the Chase" # [StashItem] == "true" // ExValue = 11411.73
+[Type] == "Fenumus' Rune of Agony" # [StashItem] == "true" // ExValue = 22.05
+[Type] == "Fenumus' Rune of Draining" # [StashItem] == "true" // ExValue = 21.66
+[Type] == "Fenumus' Rune of Spinning" # [StashItem] == "true" // ExValue = 20.25
+[Type] == "Iron Rune" # [StashItem] == "true" // ExValue = 101.83
+[Type] == "Lesser Desert Rune" # [StashItem] == "true" // ExValue = 13.64
+[Type] == "Robust Rune" # [StashItem] == "true" // ExValue = 17.20
+[Type] == "Saqawal's Rune of the Sky" # [StashItem] == "true" // ExValue = 244.03
+[Type] == "Storm Rune" # [StashItem] == "true" // ExValue = 60.47
+[Type] == "Thane Girt's Rune of Wildness" # [StashItem] == "true" // ExValue = 13.62
+[Type] == "Thane Grannell's Rune of Mastery" # [StashItem] == "true" // ExValue = 20.23
+[Type] == "Thane Leld's Rune of Spring" # [StashItem] == "true" // ExValue = 36.60
+[Type] == "The Greatwolf's Rune of Willpower" # [StashItem] == "true" // ExValue = 10.62
+[Type] == "Desert Rune" # [StashItem] == "true" // ExValue = 23.15
+[Type] == "Glacial Rune" # [StashItem] == "true" // ExValue = 15.64
+[Type] == "Farrul's Rune of Grace" # [StashItem] == "true" // ExValue = 58.77
+[Type] == "Greater Rune of Alacrity" # [StashItem] == "true" // ExValue = 245.49
+[Type] == "Greater Rune of Tithing" # [StashItem] == "true" // ExValue = 144.91
+[Type] == "Hedgewitch Assandra's Rune of Wisdom" # [StashItem] == "true" // ExValue = 30999.81
+[Type] == "Lesser Adept Rune" # [StashItem] == "true" // ExValue = 21.05
+[Type] == "Lesser Body Rune" # [StashItem] == "true" // ExValue = 21.87
+[Type] == "Lesser Glacial Rune" # [StashItem] == "true" // ExValue = 18.63
+[Type] == "Lesser Inspiration Rune" # [StashItem] == "true" // ExValue = 40.00
+[Type] == "Lesser Iron Rune" # [StashItem] == "true" // ExValue = 97.94
+[Type] == "Lesser Resolve Rune" # [StashItem] == "true" // ExValue = 16.50
+[Type] == "Lesser Storm Rune" # [StashItem] == "true" // ExValue = 65.35
+[Type] == "Saqawal's Rune of Memory" # [StashItem] == "true" // ExValue = 117.14
+[Type] == "Thane Myrk's Rune of Summer" # [StashItem] == "true" // ExValue = 13.84
+[Type] == "Vision Rune" # [StashItem] == "true" // ExValue = 15.50
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                     RITUAL                                      //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Omen of Abyssal Echoes" # [StashItem] == "true" // ExValue = 352.07
+[Type] == "Omen of Answered Prayers" # [StashItem] == "true" // ExValue = 30.00
+[Type] == "Omen of Chance" # [StashItem] == "true" // ExValue = 8399.52
+[Type] == "Omen of Chaotic Quantity" # [StashItem] == "true" // ExValue = 132.94
+[Type] == "Omen of Dextral Annulment" # [StashItem] == "true" // ExValue = 8106.63
+[Type] == "Omen of Dextral Crystallisation" # [StashItem] == "true" // ExValue = 177.88
+[Type] == "Omen of Dextral Erasure" # [StashItem] == "true" // ExValue = 4058.27
+[Type] == "Omen of Homogenising Exaltation" # [StashItem] == "true" // ExValue = 297.60
+[Type] == "Omen of Light" # [StashItem] == "true" // ExValue = 6016.12
+[Type] == "Omen of Refreshment" # [StashItem] == "true" // ExValue = 39.41
+[Type] == "Omen of Reinforcements" # [StashItem] == "true" // ExValue = 72.05
+[Type] == "Omen of Secret Compartments" # [StashItem] == "true" // ExValue = 51.48
+[Type] == "Omen of Sinistral Annulment" # [StashItem] == "true" // ExValue = 10052.25
+[Type] == "Omen of Sinistral Crystallisation" # [StashItem] == "true" // ExValue = 667.24
+[Type] == "Omen of Sinistral Exaltation" # [StashItem] == "true" // ExValue = 12.35
+[Type] == "Omen of Sinistral Necromancy" # [StashItem] == "true" // ExValue = 158.79
+[Type] == "Omen of the Hunt" # [StashItem] == "true" // ExValue = 32.36
+[Type] == "Omen of Amelioration" # [StashItem] == "true" // ExValue = 45.38
+[Type] == "Omen of Bartering" # [StashItem] == "true" // ExValue = 36.79
+[Type] == "Omen of Catalysing Exaltation" # [StashItem] == "true" // ExValue = 17.10
+[Type] == "Omen of Chaotic Monsters" # [StashItem] == "true" // ExValue = 76.09
+[Type] == "Omen of Chaotic Rarity" # [StashItem] == "true" // ExValue = 84.86
+[Type] == "Omen of Corruption" # [StashItem] == "true" // ExValue = 161.47
+[Type] == "Omen of Dextral Exaltation" # [StashItem] == "true" // ExValue = 10.89
+[Type] == "Omen of Homogenising Coronation" # [StashItem] == "true" // ExValue = 29.10
+[Type] == "Omen of Recombination" # [StashItem] == "true" // ExValue = 77.19
+[Type] == "Omen of Resurgence" # [StashItem] == "true" // ExValue = 38.56
+[Type] == "Omen of Sanctification" # [StashItem] == "true" // ExValue = 978.85
+[Type] == "Omen of Sinistral Erasure" # [StashItem] == "true" // ExValue = 5295.43
+[Type] == "Omen of the Blessed" # [StashItem] == "true" // ExValue = 61.04
+[Type] == "Omen of Whittling" # [StashItem] == "true" // ExValue = 4419.66
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                   EXPEDITION                                    //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                    DELIRIUM                                     //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+[Type] == "Concentrated Liquid Isolation" # [StashItem] == "true" // ExValue = 369.43
+[Type] == "Concentrated Liquid Suffering" # [StashItem] == "true" // ExValue = 67.05
+[Type] == "Liquid Despair" # [StashItem] == "true" // ExValue = 15.44
+[Type] == "Concentrated Liquid Fear" # [StashItem] == "true" // ExValue = 83.30
+[Type] == "Liquid Disgust" # [StashItem] == "true" // ExValue = 25.09
+
+/////////////////////////////////////////////////////////////////////////////////////
+//                                                                                 //
+//                                     BREACH                                      //
+//                                                                                 //
+/////////////////////////////////////////////////////////////////////////////////////
+
+
