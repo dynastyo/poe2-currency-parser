@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import json
 from typing import Dict, List, Tuple
 from io import StringIO
-from parsers import NinjaParser, ScoutParser
+from parsers import NinjaParser, ScoutParser, StaticParser
 
 app = Flask(__name__)
 
@@ -13,7 +13,8 @@ app = Flask(__name__)
 # Initialize parsers
 PARSERS = {
     'ninja': NinjaParser(),
-    'scout': ScoutParser()
+    'scout': ScoutParser(),
+    'static': StaticParser()
 }
 
 # =============================================================================
@@ -119,8 +120,8 @@ def process_parser(parser, min_value: float, min_value_currency: float, log_call
     return results_by_section, base_value
 
 
-def process_with_categories(ninja_categories: List[str], scout_categories: List[str], min_value: float, min_value_currency: float, log_callback=None):
-    """Process selected categories from both parsers and return formatted output."""
+def process_with_categories(ninja_categories: List[str], scout_categories: List[str], static_categories: List[str], waystone_tier: int, min_value: float, min_value_currency: float, log_callback=None):
+    """Process selected categories from all parsers and return formatted output."""
     output = StringIO()
     
     def log(message):
@@ -133,6 +134,7 @@ def process_with_categories(ninja_categories: List[str], scout_categories: List[
     log("")
     
     all_results = []
+    static_output = ""
     
     # Process Ninja categories
     if ninja_categories:
@@ -146,7 +148,7 @@ def process_with_categories(ninja_categories: List[str], scout_categories: List[
             all_results.extend(results_by_section)
         except Exception as e:
             log(f"✗ Error processing Ninja categories: {e}")
-            if not scout_categories:  # If no scout categories, this is a critical error
+            if not scout_categories and not static_categories:
                 raise
     
     # Process Scout categories
@@ -161,8 +163,23 @@ def process_with_categories(ninja_categories: List[str], scout_categories: List[
             all_results.extend(results_by_section)
         except Exception as e:
             log(f"✗ Error processing Scout categories: {e}")
-            if not ninja_categories:  # If no ninja categories, this is a critical error
+            if not ninja_categories and not static_categories:
                 raise
+    
+    # Process Static categories
+    if static_categories:
+        log("\n" + "=" * 85)
+        log("Processing static filter rules...")
+        log("=" * 85)
+        log("")
+        
+        static_parser = PARSERS['static']
+        try:
+            static_output = static_parser.generate_output(static_categories, waystone_tier)
+            total_static = sum(len(subcats) for subcats in static_categories.values())
+            log(f"✓ Generated {total_static} static filter rules from {len(static_categories)} categories")
+        except Exception as e:
+            log(f"✗ Error processing static categories: {e}")
     
     log("\n" + "=" * 85)
     log("Generating final output...")
@@ -172,6 +189,7 @@ def process_with_categories(ninja_categories: List[str], scout_categories: List[
     final_output = StringIO()
     total_items = 0
     
+    # Add dynamic content (Ninja + Scout)
     for section_name, section_results in all_results:
         final_output.write(create_section_header(section_name))
         final_output.write("\n")
@@ -181,6 +199,10 @@ def process_with_categories(ninja_categories: List[str], scout_categories: List[
             total_items += 1
         
         final_output.write("\n")
+    
+    # Add static content
+    if static_output:
+        final_output.write(static_output)
     
     log(f"✓ Success! Total items processed: {total_items}")
     log("=" * 85)
@@ -205,6 +227,8 @@ def process():
         min_value_currency = float(data.get('min_value_currency', 1))
         ninja_categories = data.get('ninja_categories', [])
         scout_categories = data.get('scout_categories', [])
+        static_categories = data.get('static_categories', {})  # Now expects a dict
+        waystone_tier = int(data.get('waystone_tier', 1))
         
         logs = []
         
@@ -212,7 +236,8 @@ def process():
             logs.append(message)
         
         result, process_log = process_with_categories(
-            ninja_categories, scout_categories, min_value, min_value_currency, log_callback
+            ninja_categories, scout_categories, static_categories, waystone_tier,
+            min_value, min_value_currency, log_callback
         )
         
         return jsonify({
@@ -232,7 +257,8 @@ def get_categories():
     """Return available categories for all parsers."""
     all_categories = {
         'ninja': [],
-        'scout': []
+        'scout': [],
+        'static': []
     }
     
     # Get Ninja categories
@@ -251,6 +277,28 @@ def get_categories():
             'id': name,
             'name': name,
             'required': info['required']
+        })
+    
+    # Get Static categories with subcategories
+    static_parser = PARSERS['static']
+    for name, info in static_parser.get_categories().items():
+        subcategories = []
+        for subcat_name in info.get('subcategories', {}).keys():
+            subcategories.append({
+                'id': subcat_name,
+                'name': subcat_name
+            })
+        
+        all_categories['static'].append({
+            'id': name,
+            'name': name,
+            'has_input': info.get('has_input', False),
+            'input_type': info.get('input_type'),
+            'input_min': info.get('input_min'),
+            'input_max': info.get('input_max'),
+            'input_default': info.get('input_default'),
+            'input_label': info.get('input_label'),
+            'subcategories': subcategories
         })
     
     return jsonify({'categories': all_categories})

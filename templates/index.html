@@ -228,6 +228,64 @@
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 12px;
         }
+        
+        .category-section {
+            margin-bottom: 20px;
+        }
+        
+        .category-section-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #e8e8e8;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-toggle-btn {
+            font-size: 0.75em;
+            color: rgb(96, 126, 237);
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: normal;
+        }
+        
+        .category-toggle-btn:hover {
+            color: rgb(76, 106, 217);
+        }
+        
+        .subcategories-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+        
+        .category-input-row {
+            padding: 8px 20px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-input-row label {
+            font-size: 0.85em;
+            color: #666;
+            margin: 0;
+        }
+        
+        .category-input-row input {
+            width: 60px;
+            padding: 4px 8px;
+            font-size: 0.85em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
 
         .checkbox-item {
             display: flex;
@@ -300,6 +358,17 @@
                 <p class="info-text">Select unique item categories</p>
             </div>
 
+            <div class="categories-group">
+                <label>
+                    <span>Static Filters:</span>
+                    <span class="toggle-all-btn" onclick="toggleAllStatic()">Check all/none</span>
+                </label>
+                <div id="staticCategoriesCheckboxes" class="categories-checkboxes">
+                    <!-- Static categories will be loaded dynamically -->
+                </div>
+                <p class="info-text">Fixed filter rules for common items</p>
+            </div>
+
             <div class="input-group">
                 <label for="min_value">Minimum Exalted Value (General):</label>
                 <input type="number" id="min_value" value="10" step="0.1" min="0">
@@ -333,6 +402,7 @@
         let currentResult = '';
         let ninjaCategories = [];
         let scoutCategories = [];
+        let staticCategories = [];
 
         // Load available categories on page load
         async function loadCategories() {
@@ -346,6 +416,7 @@
                 const data = await response.json();
                 ninjaCategories = data.categories.ninja;
                 scoutCategories = data.categories.scout;
+                staticCategories = data.categories.static;
                 
                 // Load Ninja categories
                 const ninjaContainer = document.getElementById('ninjaCategoriesCheckboxes');
@@ -394,6 +465,83 @@
                     div.appendChild(label);
                     scoutContainer.appendChild(div);
                 });
+                
+                // Load Static categories with subcategories
+                const staticContainer = document.getElementById('staticCategoriesCheckboxes');
+                staticContainer.innerHTML = '';
+                
+                data.categories.static.forEach(category => {
+                    const section = document.createElement('div');
+                    section.className = 'category-section';
+                    
+                    // Category title with toggle button
+                    const titleDiv = document.createElement('div');
+                    titleDiv.className = 'category-section-title';
+                    
+                    const titleSpan = document.createElement('span');
+                    titleSpan.textContent = category.name;
+                    
+                    const toggleBtn = document.createElement('span');
+                    toggleBtn.className = 'category-toggle-btn';
+                    toggleBtn.textContent = 'Check all/none';
+                    toggleBtn.onclick = () => toggleStaticCategory(category.id);
+                    
+                    titleDiv.appendChild(titleSpan);
+                    titleDiv.appendChild(toggleBtn);
+                    
+                    // Add input field row for categories that need it (like Waystones)
+                    let inputRow = null;
+                    if (category.has_input) {
+                        inputRow = document.createElement('div');
+                        inputRow.className = 'category-input-row';
+                        
+                        const inputLabel = document.createElement('label');
+                        inputLabel.textContent = `${category.input_label}:`;
+                        inputLabel.htmlFor = `static_input_${category.id}`;
+                        
+                        const input = document.createElement('input');
+                        input.type = category.input_type;
+                        input.id = `static_input_${category.id}`;
+                        input.min = category.input_min;
+                        input.max = category.input_max;
+                        input.value = category.input_default;
+                        
+                        inputRow.appendChild(inputLabel);
+                        inputRow.appendChild(input);
+                    }
+                    
+                    // Subcategories list
+                    const subcatList = document.createElement('div');
+                    subcatList.className = 'subcategories-list';
+                    subcatList.id = `static_subcats_${category.id}`;
+                    
+                    category.subcategories.forEach(subcat => {
+                        const div = document.createElement('div');
+                        div.className = 'checkbox-item';
+                        
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = `static_${category.id}_${subcat.id}`;
+                        checkbox.value = subcat.id;
+                        checkbox.checked = true; // Check by default
+                        checkbox.dataset.category = category.id;
+                        
+                        const label = document.createElement('label');
+                        label.htmlFor = `static_${category.id}_${subcat.id}`;
+                        label.textContent = subcat.name;
+                        
+                        div.appendChild(checkbox);
+                        div.appendChild(label);
+                        subcatList.appendChild(div);
+                    });
+                    
+                    section.appendChild(titleDiv);
+                    if (inputRow) {
+                        section.appendChild(inputRow);
+                    }
+                    section.appendChild(subcatList);
+                    staticContainer.appendChild(section);
+                });
             } catch (error) {
                 console.error('Failed to load categories:', error);
             }
@@ -439,13 +587,32 @@
                 }
             });
             
+            // Get selected Static subcategories (grouped by category)
+            const selectedStaticCategories = {};
+            staticCategories.forEach(category => {
+                const selectedSubcats = [];
+                category.subcategories.forEach(subcat => {
+                    const checkbox = document.getElementById(`static_${category.id}_${subcat.id}`);
+                    if (checkbox && checkbox.checked) {
+                        selectedSubcats.push(subcat.id);
+                    }
+                });
+                if (selectedSubcats.length > 0) {
+                    selectedStaticCategories[category.id] = selectedSubcats;
+                }
+            });
+            
+            // Get waystone tier input
+            const waystoneTierInput = document.getElementById('static_input_Waystones');
+            const waystoneTier = waystoneTierInput ? parseInt(waystoneTierInput.value) : 1;
+            
             // Validate inputs
             if (isNaN(minValue) || isNaN(minValueCurrency)) {
                 alert('Please enter valid numbers for minimum values');
                 return;
             }
             
-            if (selectedNinjaCategories.length === 0 && selectedScoutCategories.length === 0) {
+            if (selectedNinjaCategories.length === 0 && selectedScoutCategories.length === 0 && Object.keys(selectedStaticCategories).length === 0) {
                 alert('Please select at least one category');
                 return;
             }
@@ -471,7 +638,9 @@
                         min_value: minValue,
                         min_value_currency: minValueCurrency,
                         ninja_categories: selectedNinjaCategories,
-                        scout_categories: selectedScoutCategories
+                        scout_categories: selectedScoutCategories,
+                        static_categories: selectedStaticCategories,
+                        waystone_tier: waystoneTier
                     })
                 });
                 
@@ -545,6 +714,37 @@
         // Toggle all Scout checkboxes
         function toggleAllScout() {
             const checkboxes = scoutCategories.map(cat => document.getElementById(`scout_${cat.id}`)).filter(cb => cb && !cb.disabled);
+            if (checkboxes.length === 0) return;
+            
+            const allChecked = checkboxes.every(cb => cb.checked);
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+        }
+        
+        // Toggle all Static checkboxes (all subcategories across all categories)
+        function toggleAllStatic() {
+            const allCheckboxes = [];
+            staticCategories.forEach(cat => {
+                cat.subcategories.forEach(subcat => {
+                    const checkbox = document.getElementById(`static_${cat.id}_${subcat.id}`);
+                    if (checkbox) allCheckboxes.push(checkbox);
+                });
+            });
+            
+            if (allCheckboxes.length === 0) return;
+            
+            const allChecked = allCheckboxes.every(cb => cb.checked);
+            allCheckboxes.forEach(cb => cb.checked = !allChecked);
+        }
+        
+        // Toggle checkboxes for a specific static category
+        function toggleStaticCategory(categoryId) {
+            const category = staticCategories.find(cat => cat.id === categoryId);
+            if (!category) return;
+            
+            const checkboxes = category.subcategories.map(subcat => 
+                document.getElementById(`static_${categoryId}_${subcat.id}`)
+            ).filter(cb => cb);
+            
             if (checkboxes.length === 0) return;
             
             const allChecked = checkboxes.every(cb => cb.checked);
