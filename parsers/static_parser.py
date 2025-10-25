@@ -12,20 +12,6 @@ class StaticParser:
         
         # Define all available static categories with individual subcategories
         self.categories = {
-            "Distilled Emotions": {
-                "subcategories": {
-                    "Distilled Isolation": '[Type] == "Distilled Isolation" # [StashItem] == "true"',
-                    "Distilled Suffering": '[Type] == "Distilled Suffering" # [StashItem] == "true"',
-                    "Distilled Fear": '[Type] == "Distilled Fear" # [StashItem] == "true"',
-                    "Distilled Despair": '[Type] == "Distilled Despair" # [StashItem] == "true"',
-                    "Distilled Disgust": '[Type] == "Distilled Disgust" # [StashItem] == "true"',
-                    "Distilled Envy": '[Type] == "Distilled Envy" # [StashItem] == "true"',
-                    "Distilled Paranoia": '[Type] == "Distilled Paranoia" # [StashItem] == "true"',
-                    "Distilled Ire": '[Type] == "Distilled Ire" # [StashItem] == "true"',
-                    "Distilled Guilt": '[Type] == "Distilled Guilt" # [StashItem] == "true"',
-                    "Distilled Greed": '[Type] == "Distilled Greed" # [StashItem] == "true"'
-                }
-            },
             "Splinters": {
                 "subcategories": {
                     "Breach Splinter": '[Type] == "Breach Splinter" # [StashItem] == "true"',
@@ -47,7 +33,7 @@ class StaticParser:
             },
             "Special Waystones": {
                 "subcategories": {
-                    "An Audience With The King": '[Type] == "An Audience With The King" # [StashItem] == "true"',
+                    "An Audience with The King": '[Type] == "An Audience with The King" # [StashItem] == "true"',
                     "Expedition Logbook": '[Type] == "Expedition Logbook" # [StashItem] == "true"'
                 }
             },

@@ -136,7 +136,7 @@ def extract_section_name_from_url(url: str) -> str:
     return "UNKNOWN SECTION"
 
 
-def process_all_urls(urls: List[str] = None, output_file: str = "currency_exalted_values.txt"):
+def process_all_urls(urls: List[str] = None, output_file: str = "dyno.ipd"):
     """
     Process multiple URLs. First URL must contain exalted currency data.
     
@@ -222,7 +222,7 @@ def process_all_urls(urls: List[str] = None, output_file: str = "currency_exalte
     return results_by_section
 
 
-def main(url: str = None, output_file: str = "currency_exalted_values.txt"):
+def main(url: str = None, output_file: str = "dyno.ipd"):
     """
     Main function to fetch, parse, and output currency data.
     
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     # Check if URL is provided as command line argument
     if len(sys.argv) > 1:
         url = sys.argv[1]
-        output_file = sys.argv[2] if len(sys.argv) > 2 else "currency_exalted_values.txt"
+        output_file = sys.argv[2] if len(sys.argv) > 2 else "dyno.ipd"
         main(url, output_file)
     else:
         main()
