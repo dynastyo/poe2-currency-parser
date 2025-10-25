@@ -33,7 +33,7 @@ class StaticParser:
             },
             "Special Waystones": {
                 "subcategories": {
-                    "An Audience with The King": '[Type] == "An Audience with The King" # [StashItem] == "true"',
+                    "An Audience with the King": '[Type] == "An Audience with the King" # [StashItem] == "true"',
                     "Expedition Logbook": '[Type] == "Expedition Logbook" # [StashItem] == "true"'
                 }
             },
