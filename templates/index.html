@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PoE2 Currency Parser</title>
+    <title>Dynos Lazy Pickit Generator</title>
     <style>
         * {
             margin: 0;
@@ -203,9 +203,24 @@
             border: 1px solid #e0e0e0;
         }
 
-        .categories-group label {
+        .categories-group > label {
             margin-bottom: 12px;
             font-size: 0.875em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .toggle-all-btn {
+            font-size: 0.75em;
+            color: rgb(96, 126, 237);
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: normal;
+        }
+        
+        .toggle-all-btn:hover {
+            color: rgb(76, 106, 217);
         }
 
         .categories-checkboxes {
@@ -260,23 +275,29 @@
 </head>
 <body>
     <div class="container">
-        <h1>⚔️ PoE2 Currency Parser ⚔️</h1>
+        <h1>⚔️ Dynos Lazy Pickit Generator ⚔️</h1>
         
         <div class="config-panel">
             <div class="categories-group">
-                <label>Poe.Ninja Categories:</label>
+                <label>
+                    <span>Currency Categories:</span>
+                    <span class="toggle-all-btn" onclick="toggleAllNinja()">Check all/none</span>
+                </label>
                 <div id="ninjaCategoriesCheckboxes" class="categories-checkboxes">
                     <!-- Ninja categories will be loaded dynamically -->
                 </div>
-                <p class="info-text">Select currency and item categories from Poe.Ninja</p>
+                <p class="info-text">Select currency and item categories</p>
             </div>
 
             <div class="categories-group">
-                <label>Scout Unique Items:</label>
+                <label>
+                    <span>Unique Items:</span>
+                    <span class="toggle-all-btn" onclick="toggleAllScout()">Check all/none</span>
+                </label>
                 <div id="scoutCategoriesCheckboxes" class="categories-checkboxes">
                     <!-- Scout categories will be loaded dynamically -->
                 </div>
-                <p class="info-text">Select unique item categories from Scout</p>
+                <p class="info-text">Select unique item categories</p>
             </div>
 
             <div class="input-group">
@@ -362,7 +383,7 @@
                     checkbox.type = 'checkbox';
                     checkbox.id = `scout_${category.id}`;
                     checkbox.value = category.id;
-                    checkbox.checked = false; // Uncheck Scout by default
+                    checkbox.checked = true; // Check Scout by default
                     checkbox.disabled = category.required;
                     
                     const label = document.createElement('label');
@@ -511,6 +532,24 @@
                 startProcessing();
             }
         });
+
+        // Toggle all Ninja checkboxes
+        function toggleAllNinja() {
+            const checkboxes = ninjaCategories.map(cat => document.getElementById(`ninja_${cat.id}`)).filter(cb => cb && !cb.disabled);
+            if (checkboxes.length === 0) return;
+            
+            const allChecked = checkboxes.every(cb => cb.checked);
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+        }
+        
+        // Toggle all Scout checkboxes
+        function toggleAllScout() {
+            const checkboxes = scoutCategories.map(cat => document.getElementById(`scout_${cat.id}`)).filter(cb => cb && !cb.disabled);
+            if (checkboxes.length === 0) return;
+            
+            const allChecked = checkboxes.every(cb => cb.checked);
+            checkboxes.forEach(cb => cb.checked = !allChecked);
+        }
 
         // Load categories when page loads
         window.addEventListener('DOMContentLoaded', loadCategories);
