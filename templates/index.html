@@ -264,11 +264,19 @@
         
         <div class="config-panel">
             <div class="categories-group">
-                <label>Categories to Include:</label>
-                <div id="categoriesCheckboxes" class="categories-checkboxes">
-                    <!-- Categories will be loaded dynamically -->
+                <label>Poe.Ninja Categories:</label>
+                <div id="ninjaCategoriesCheckboxes" class="categories-checkboxes">
+                    <!-- Ninja categories will be loaded dynamically -->
                 </div>
-                <p class="info-text">Select which categories to include in the output</p>
+                <p class="info-text">Select currency and item categories from Poe.Ninja</p>
+            </div>
+
+            <div class="categories-group">
+                <label>Scout Unique Items:</label>
+                <div id="scoutCategoriesCheckboxes" class="categories-checkboxes">
+                    <!-- Scout categories will be loaded dynamically -->
+                </div>
+                <p class="info-text">Select unique item categories from Scout</p>
             </div>
 
             <div class="input-group">
@@ -302,7 +310,8 @@
 
     <script>
         let currentResult = '';
-        let availableCategories = [];
+        let ninjaCategories = [];
+        let scoutCategories = [];
 
         // Load available categories on page load
         async function loadCategories() {
@@ -314,29 +323,55 @@
                 }
                 
                 const data = await response.json();
-                availableCategories = data.categories;
+                ninjaCategories = data.categories.ninja;
+                scoutCategories = data.categories.scout;
                 
-                const container = document.getElementById('categoriesCheckboxes');
-                container.innerHTML = '';
+                // Load Ninja categories
+                const ninjaContainer = document.getElementById('ninjaCategoriesCheckboxes');
+                ninjaContainer.innerHTML = '';
                 
-                data.categories.forEach(category => {
+                data.categories.ninja.forEach(category => {
                     const div = document.createElement('div');
                     div.className = 'checkbox-item';
                     
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
-                    checkbox.id = `category_${category.id}`;
+                    checkbox.id = `ninja_${category.id}`;
                     checkbox.value = category.id;
                     checkbox.checked = true; // Check all by default
                     checkbox.disabled = category.required; // Disable Currency checkbox
                     
                     const label = document.createElement('label');
-                    label.htmlFor = `category_${category.id}`;
+                    label.htmlFor = `ninja_${category.id}`;
                     label.textContent = category.name;
                     
                     div.appendChild(checkbox);
                     div.appendChild(label);
-                    container.appendChild(div);
+                    ninjaContainer.appendChild(div);
+                });
+                
+                // Load Scout categories
+                const scoutContainer = document.getElementById('scoutCategoriesCheckboxes');
+                scoutContainer.innerHTML = '';
+                
+                data.categories.scout.forEach(category => {
+                    const div = document.createElement('div');
+                    div.className = 'checkbox-item';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `scout_${category.id}`;
+                    checkbox.value = category.id;
+                    checkbox.checked = false; // Uncheck Scout by default
+                    checkbox.disabled = category.required;
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = `scout_${category.id}`;
+                    label.textContent = category.name;
+                    
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    scoutContainer.appendChild(div);
                 });
             } catch (error) {
                 console.error('Failed to load categories:', error);
@@ -365,12 +400,21 @@
             const startBtn = document.getElementById('startBtn');
             const consoleEl = document.getElementById('console');
             
-            // Get selected categories
-            const selectedCategories = [];
-            availableCategories.forEach(category => {
-                const checkbox = document.getElementById(`category_${category.id}`);
+            // Get selected Ninja categories
+            const selectedNinjaCategories = [];
+            ninjaCategories.forEach(category => {
+                const checkbox = document.getElementById(`ninja_${category.id}`);
                 if (checkbox && checkbox.checked) {
-                    selectedCategories.push(category.id);
+                    selectedNinjaCategories.push(category.id);
+                }
+            });
+            
+            // Get selected Scout categories
+            const selectedScoutCategories = [];
+            scoutCategories.forEach(category => {
+                const checkbox = document.getElementById(`scout_${category.id}`);
+                if (checkbox && checkbox.checked) {
+                    selectedScoutCategories.push(category.id);
                 }
             });
             
@@ -380,7 +424,7 @@
                 return;
             }
             
-            if (selectedCategories.length === 0) {
+            if (selectedNinjaCategories.length === 0 && selectedScoutCategories.length === 0) {
                 alert('Please select at least one category');
                 return;
             }
@@ -405,7 +449,8 @@
                     body: JSON.stringify({
                         min_value: minValue,
                         min_value_currency: minValueCurrency,
-                        categories: selectedCategories
+                        ninja_categories: selectedNinjaCategories,
+                        scout_categories: selectedScoutCategories
                     })
                 });
                 

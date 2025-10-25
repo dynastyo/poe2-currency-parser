@@ -75,8 +75,8 @@ def process_parser(parser, min_value: float, min_value_currency: float, log_call
             
             log(f"Calculating values using base value: {base_value}...")
             
-            # Use different minimum value for currency (first URL)
-            if section_name == "CURRENCY" or i == 0:
+            # Use different minimum value for Ninja currency (first URL for Ninja only)
+            if parser.name == "Poe.Ninja" and (section_name == "CURRENCY" or i == 0):
                 current_min = min_value_currency
                 log(f"Applying minimum value filter: {current_min} Ex (Currency)")
             else:
@@ -88,11 +88,23 @@ def process_parser(parser, min_value: float, min_value_currency: float, log_call
             # Format each result according to the parser's template
             formatted_results = []
             output_format = parser.get_output_format()
-            for item_id, item_name, calculated_value in results:
-                formatted_line = output_format.format(
-                    name=item_name,
-                    value=f"{calculated_value:.2f}"
-                )
+            for result_tuple in results:
+                # Handle different tuple lengths (Ninja: 3 items, Scout: 4 items)
+                if len(result_tuple) == 4:
+                    # Scout format: (id, name, type, value)
+                    item_id, item_name, item_type, calculated_value = result_tuple
+                    formatted_line = output_format.format(
+                        type=item_type,
+                        name=item_name,
+                        value=f"{calculated_value:.2f}"
+                    )
+                else:
+                    # Ninja format: (id, name, value)
+                    item_id, item_name, calculated_value = result_tuple
+                    formatted_line = output_format.format(
+                        name=item_name,
+                        value=f"{calculated_value:.2f}"
+                    )
                 formatted_results.append((item_id, item_name, calculated_value, formatted_line))
             
             results_by_section.append((section_name, formatted_results))
@@ -107,8 +119,8 @@ def process_parser(parser, min_value: float, min_value_currency: float, log_call
     return results_by_section, base_value
 
 
-def process_with_categories(categories: List[str], min_value: float, min_value_currency: float, log_callback=None):
-    """Process selected categories and return formatted output."""
+def process_with_categories(ninja_categories: List[str], scout_categories: List[str], min_value: float, min_value_currency: float, log_callback=None):
+    """Process selected categories from both parsers and return formatted output."""
     output = StringIO()
     
     def log(message):
@@ -120,19 +132,37 @@ def process_with_categories(categories: List[str], min_value: float, min_value_c
     log("=" * 85)
     log("")
     
-    # For now, we only support ninja parser
-    parser = PARSERS['ninja']
+    all_results = []
     
-    # Set active categories on the parser
-    parser.set_active_categories(categories)
+    # Process Ninja categories
+    if ninja_categories:
+        ninja_parser = PARSERS['ninja']
+        ninja_parser.set_active_categories(ninja_categories)
+        
+        try:
+            results_by_section, base_value = process_parser(
+                ninja_parser, min_value, min_value_currency, log_callback=log
+            )
+            all_results.extend(results_by_section)
+        except Exception as e:
+            log(f"✗ Error processing Ninja categories: {e}")
+            if not scout_categories:  # If no scout categories, this is a critical error
+                raise
     
-    try:
-        results_by_section, base_value = process_parser(
-            parser, min_value, min_value_currency, log_callback=log
-        )
-    except Exception as e:
-        log(f"✗ Error processing: {e}")
-        raise
+    # Process Scout categories
+    if scout_categories:
+        scout_parser = PARSERS['scout']
+        scout_parser.set_active_categories(scout_categories)
+        
+        try:
+            results_by_section, base_value = process_parser(
+                scout_parser, min_value, min_value_currency, log_callback=log
+            )
+            all_results.extend(results_by_section)
+        except Exception as e:
+            log(f"✗ Error processing Scout categories: {e}")
+            if not ninja_categories:  # If no ninja categories, this is a critical error
+                raise
     
     log("\n" + "=" * 85)
     log("Generating final output...")
@@ -142,7 +172,7 @@ def process_with_categories(categories: List[str], min_value: float, min_value_c
     final_output = StringIO()
     total_items = 0
     
-    for section_name, section_results in results_by_section:
+    for section_name, section_results in all_results:
         final_output.write(create_section_header(section_name))
         final_output.write("\n")
         
@@ -173,14 +203,17 @@ def process():
         data = request.get_json()
         min_value = float(data.get('min_value', 10))
         min_value_currency = float(data.get('min_value_currency', 1))
-        categories = data.get('categories', [])
+        ninja_categories = data.get('ninja_categories', [])
+        scout_categories = data.get('scout_categories', [])
         
         logs = []
         
         def log_callback(message):
             logs.append(message)
         
-        result, process_log = process_with_categories(categories, min_value, min_value_currency, log_callback)
+        result, process_log = process_with_categories(
+            ninja_categories, scout_categories, min_value, min_value_currency, log_callback
+        )
         
         return jsonify({
             'success': True,
@@ -196,20 +229,31 @@ def process():
 
 @app.route('/categories', methods=['GET'])
 def get_categories():
-    """Return available categories."""
-    # For now, we only support ninja parser
-    parser = PARSERS['ninja']
-    categories = parser.get_categories()
+    """Return available categories for all parsers."""
+    all_categories = {
+        'ninja': [],
+        'scout': []
+    }
     
-    categories_list = []
-    for name, info in categories.items():
-        categories_list.append({
+    # Get Ninja categories
+    ninja_parser = PARSERS['ninja']
+    for name, info in ninja_parser.get_categories().items():
+        all_categories['ninja'].append({
             'id': name,
             'name': name,
             'required': info['required']
         })
     
-    return jsonify({'categories': categories_list})
+    # Get Scout categories
+    scout_parser = PARSERS['scout']
+    for name, info in scout_parser.get_categories().items():
+        all_categories['scout'].append({
+            'id': name,
+            'name': name,
+            'required': info['required']
+        })
+    
+    return jsonify({'categories': all_categories})
 
 
 if __name__ == '__main__':

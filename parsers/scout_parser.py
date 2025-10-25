@@ -1,5 +1,5 @@
 """
-Parser for scout data source (placeholder - to be implemented).
+Parser for poe2scout.com data source for unique items.
 """
 from typing import List, Tuple
 import re
@@ -7,17 +7,44 @@ from .base_parser import BaseParser
 
 
 class ScoutParser(BaseParser):
-    """Parser for Scout API (implement based on actual API structure)."""
+    """Parser for poe2scout.com API for unique items."""
     
     def __init__(self):
         super().__init__("Scout")
-        # TODO: Update this format based on Scout's requirements
-        self.output_format = 'Show "{name}" // Value: {value} Ex'
-        # TODO: Add Scout URLs here
-        self.urls = [
-            # Add your Scout URLs here
-            # Example: "https://scout.example.com/api/items",
-        ]
+        self.output_format = '[Type] == "{type}" && [Rarity] == "Unique" # [UniqueName] == "{name}" && [StashItem] == "true" // ExValue = {value}'
+        
+        # Define all available categories with their URLs
+        self.categories = {
+            "Unique Accessories": {
+                "url": "https://poe2scout.com/api/items/unique/accessory?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "required": False
+            },
+            "Unique Armour": {
+                "url": "https://poe2scout.com/api/items/unique/armour?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "required": False
+            },
+            "Unique Weapons": {
+                "url": "https://poe2scout.com/api/items/unique/weapon?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "required": False
+            },
+            "Unique Jewels": {
+                "url": "https://poe2scout.com/api/items/unique/jewel?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "required": False
+            }
+        }
+        
+        self.urls = []
+    
+    def get_categories(self):
+        """Return available categories."""
+        return self.categories
+    
+    def set_active_categories(self, active_categories: List[str]):
+        """Set which categories to fetch."""
+        self.urls = []
+        for category in active_categories:
+            if category in self.categories:
+                self.urls.append(self.categories[category]["url"])
     
     def get_urls(self) -> List[str]:
         """Return list of URLs to fetch from Scout."""
@@ -29,15 +56,10 @@ class ScoutParser(BaseParser):
     
     def fetch_and_parse(self, url: str) -> dict:
         """Fetch and parse JSON from Scout."""
-        # TODO: Implement Scout-specific parsing if needed
         return self.fetch_json_from_url(url)
     
     def get_base_value(self, data: dict) -> float:
-        """Extract base value from Scout data."""
-        # TODO: Implement based on Scout's JSON structure
-        # This is a placeholder - update based on actual Scout API
-        # Example:
-        # return data.get('baseValue', 1.0)
+        """Scout prices are already in exalted, so base value is 1.0."""
         return 1.0
     
     def calculate_values(self, data: dict, base_value: float, min_value: float) -> List[Tuple[str, str, float]]:
@@ -46,36 +68,34 @@ class ScoutParser(BaseParser):
         
         Args:
             data: JSON data from Scout
-            base_value: Base value for calculations
-            min_value: Minimum value to include
+            base_value: Base value (always 1.0 for Scout since prices are in exalted)
+            min_value: Minimum exalted value to include
         
         Returns:
-            List of tuples: (id, name, calculated_value)
+            List of tuples: (item_id, item_name, item_type, exalted_value)
         """
-        # TODO: Implement based on Scout's JSON structure
-        # This is a placeholder - update based on actual Scout API
-        
-        # Example implementation:
         results = []
-        # Assuming Scout has an 'items' array
+        
+        # Scout returns items with currentPrice already in exalted
         for item in data.get('items', []):
-            item_id = item.get('id', '')
-            item_name = item.get('name', item_id)
-            item_value = item.get('value', 0)
+            item_id = str(item.get('id', ''))
+            item_name = item.get('name', item.get('text', 'Unknown'))
+            item_type = item.get('type', 'Unknown')
+            exalted_value = item.get('currentPrice', 0)
             
-            # Calculate relative value
-            calculated_value = item_value / base_value if base_value != 0 else 0
-            
-            if calculated_value >= min_value:
-                results.append((item_id, item_name, calculated_value))
+            # Only include items that meet the minimum value threshold
+            if exalted_value >= min_value:
+                # Return tuple with type included
+                results.append((item_id, item_name, item_type, exalted_value))
         
         return results
     
     def extract_section_name(self, url: str) -> str:
         """Extract section name from the URL."""
-        # TODO: Implement based on Scout's URL structure
-        # This is a placeholder
-        match = re.search(r'/([^/]+)/?$', url)
+        # Extract category from URL pattern: /unique/{category}
+        match = re.search(r'/unique/([^?]+)', url)
         if match:
-            return match.group(1).upper().replace('-', ' ')
-        return "SCOUT DATA"
+            category = match.group(1)
+            # Convert to title case with spaces
+            return f"UNIQUE {category.upper()}"
+        return "UNIQUE ITEMS"
