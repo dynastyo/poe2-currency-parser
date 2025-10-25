@@ -15,19 +15,19 @@ class ScoutParser(BaseParser):
         
         # Define all available categories with their URLs
         self.categories = {
-            "Unique Accessories": {
+            "Accessories": {
                 "url": "https://poe2scout.com/api/items/unique/accessory?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
                 "required": False
             },
-            "Unique Armour": {
+            "Armour": {
                 "url": "https://poe2scout.com/api/items/unique/armour?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
                 "required": False
             },
-            "Unique Weapons": {
+            "Weapons": {
                 "url": "https://poe2scout.com/api/items/unique/weapon?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
                 "required": False
             },
-            "Unique Jewels": {
+            "Jewels": {
                 "url": "https://poe2scout.com/api/items/unique/jewel?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
                 "required": False
             }
