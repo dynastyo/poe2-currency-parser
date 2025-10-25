@@ -195,6 +195,50 @@
             font-weight: 400;
         }
 
+        .categories-group {
+            margin-bottom: 24px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .categories-group label {
+            margin-bottom: 12px;
+            font-size: 0.875em;
+        }
+
+        .categories-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: rgb(96, 126, 237);
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
+            color: #424242;
+        }
+
+        .checkbox-item input[type="checkbox"]:disabled + label {
+            color: #9e9e9e;
+            cursor: not-allowed;
+        }
+
         /* Scrollbar styling */
         .console::-webkit-scrollbar {
             width: 8px;
@@ -219,6 +263,14 @@
         <h1>⚔️ PoE2 Currency Parser ⚔️</h1>
         
         <div class="config-panel">
+            <div class="categories-group">
+                <label>Categories to Include:</label>
+                <div id="categoriesCheckboxes" class="categories-checkboxes">
+                    <!-- Categories will be loaded dynamically -->
+                </div>
+                <p class="info-text">Select which categories to include in the output</p>
+            </div>
+
             <div class="input-group">
                 <label for="min_value">Minimum Exalted Value (General):</label>
                 <input type="number" id="min_value" value="10" step="0.1" min="0">
@@ -250,6 +302,46 @@
 
     <script>
         let currentResult = '';
+        let availableCategories = [];
+
+        // Load available categories on page load
+        async function loadCategories() {
+            try {
+                const response = await fetch('/categories');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                availableCategories = data.categories;
+                
+                const container = document.getElementById('categoriesCheckboxes');
+                container.innerHTML = '';
+                
+                data.categories.forEach(category => {
+                    const div = document.createElement('div');
+                    div.className = 'checkbox-item';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = `category_${category.id}`;
+                    checkbox.value = category.id;
+                    checkbox.checked = true; // Check all by default
+                    checkbox.disabled = category.required; // Disable Currency checkbox
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = `category_${category.id}`;
+                    label.textContent = category.name;
+                    
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Failed to load categories:', error);
+            }
+        }
 
         function addConsoleLog(message, type = 'log') {
             const consoleOutput = document.getElementById('consoleOutput');
@@ -273,9 +365,23 @@
             const startBtn = document.getElementById('startBtn');
             const consoleEl = document.getElementById('console');
             
+            // Get selected categories
+            const selectedCategories = [];
+            availableCategories.forEach(category => {
+                const checkbox = document.getElementById(`category_${category.id}`);
+                if (checkbox && checkbox.checked) {
+                    selectedCategories.push(category.id);
+                }
+            });
+            
             // Validate inputs
             if (isNaN(minValue) || isNaN(minValueCurrency)) {
                 alert('Please enter valid numbers for minimum values');
+                return;
+            }
+            
+            if (selectedCategories.length === 0) {
+                alert('Please select at least one category');
                 return;
             }
             
@@ -298,9 +404,14 @@
                     },
                     body: JSON.stringify({
                         min_value: minValue,
-                        min_value_currency: minValueCurrency
+                        min_value_currency: minValueCurrency,
+                        categories: selectedCategories
                     })
                 });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 
                 const data = await response.json();
                 
@@ -355,6 +466,9 @@
                 startProcessing();
             }
         });
+
+        // Load categories when page loads
+        window.addEventListener('DOMContentLoaded', loadCategories);
     </script>
 </body>
 </html>
