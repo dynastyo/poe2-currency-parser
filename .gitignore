@@ -1,0 +1,12 @@
+node_modules
+
+/.cache
+/build
+.env
+
+*.log
+
+# VSCode user-specific settings (keep workspace settings)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
