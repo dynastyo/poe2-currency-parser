@@ -17,19 +17,19 @@ OUTPUT_FORMAT = '[Type] == "{name}" # [StashItem] == "true" // ExValue = {exalte
 # IMPORTANT: The first URL MUST be the currency URL that contains the exalted value
 # Section name will be extracted from overviewName parameter (e.g., "Currency", "Fragments")
 URLS = [
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Currency",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Fragments",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Abyss",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=UncutGems",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=LineageSupportGems",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Essences",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ultimatum",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Talismans",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Runes",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ritual",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Expedition",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Delirium",
-    "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Breach",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Currency",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Fragments",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Abyss",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=UncutGems",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=LineageSupportGems",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Essences",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Ultimatum",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Talismans",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Runes",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Ritual",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Expedition",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Delirium",
+    "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Breach",
 ]
 # =============================================================================
 
@@ -126,7 +126,7 @@ def write_to_txt(results_by_section: List[Tuple[str, List[Tuple[str, str, float,
 def extract_section_name_from_url(url: str) -> str:
     """Extract the section name from the overviewName parameter in the URL."""
     import re
-    match = re.search(r'overviewName=([^&]+)', url)
+    match = re.search(r'type=([^&]+)', url)
     if match:
         # Convert CamelCase to UPPER CASE WITH SPACES
         overview_name = match.group(1)
