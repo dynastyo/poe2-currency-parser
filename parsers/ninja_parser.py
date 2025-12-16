@@ -16,55 +16,55 @@ class NinjaParser(BaseParser):
         # Define all available categories with their URLs
         self.categories = {
             "Currency": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Currency",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Currency",
                 "required": True
             },
             "Fragments": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Fragments",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Fragments",
                 "required": False
             },
             "Abyss": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Abyss",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Abyss",
                 "required": False
             },
             "Uncut Gems": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=UncutGems",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=UncutGems",
                 "required": False
             },
             "Lineage Support Gems": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=LineageSupportGems",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=LineageSupportGems",
                 "required": False
             },
             "Essences": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Essences",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Essences",
                 "required": False
             },
             "Ultimatum": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ultimatum",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Ultimatum",
                 "required": False
             },
             "Talismans": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Talismans",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Talismans",
                 "required": False
             },
             "Runes": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Runes",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Runes",
                 "required": False
             },
             "Ritual": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Ritual",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Ritual",
                 "required": False
             },
             "Expedition": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Expedition",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Expedition",
                 "required": False
             },
             "Delirium": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Delirium",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Delirium",
                 "required": False
             },
             "Breach": {
-                "url": "https://poe.ninja/poe2/api/economy/temp2/overview?leagueName=Rise+of+the+Abyssal&overviewName=Breach",
+                "url": "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=Fate+of+the+Vaal&type=Breach",
                 "required": False
             }
         }
@@ -144,7 +144,7 @@ class NinjaParser(BaseParser):
     
     def extract_section_name(self, url: str) -> str:
         """Extract the section name from the overviewName parameter in the URL."""
-        match = re.search(r'overviewName=([^&]+)', url)
+        match = re.search(r'type=([^&]+)', url)
         if match:
             overview_name = match.group(1)
             # Convert CamelCase to UPPER CASE WITH SPACES
