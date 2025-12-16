@@ -16,27 +16,27 @@ class ScoutParser(BaseParser):
         # Define all available categories with their URLs
         self.categories = {
             "Accessories": {
-                "url": "https://poe2scout.com/api/items/unique/accessory?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "url": "https://poe2scout.com/api/items/unique/accessory?page=1&perPage=250&league=Fate%20of%20the%20Vaal&search=&referenceCurrency=exalted",
                 "required": False
             },
             "Armour": {
-                "url": "https://poe2scout.com/api/items/unique/armour?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "url": "https://poe2scout.com/api/items/unique/armour?page=1&perPage=250&league=Fate%20of%20the%20Vaal&search=&referenceCurrency=exalted",
                 "required": False
             },
             "Jewels": {
-                "url": "https://poe2scout.com/api/items/unique/jewel?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "url": "https://poe2scout.com/api/items/unique/jewel?page=1&perPage=250&league=Fate%20of%20the%20Vaal&search=&referenceCurrency=exalted",
                 "required": False
             },
             "Maps": {
-                "url": "https://poe2scout.com/api/items/unique/map?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "url": "https://poe2scout.com/api/items/unique/map?page=1&perPage=250&league=Fate%20of%20the%20Vaal&search=&referenceCurrency=exalted",
                 "required": False
             },
             "Weapons": {
-                "url": "https://poe2scout.com/api/items/unique/weapon?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "url": "https://poe2scout.com/api/items/unique/weapon?page=1&perPage=250&league=Fate%20of%20the%20Vaal&search=&referenceCurrency=exalted",
                 "required": False
             },
              "Sanctum": {
-                "url": "https://poe2scout.com/api/items/unique/sanctum?page=1&perPage=250&league=Rise%20of%20the%20Abyssal&search=&referenceCurrency=exalted",
+                "url": "https://poe2scout.com/api/items/unique/sanctum?page=1&perPage=250&league=Fate%20of%20the%20Vaal&search=&referenceCurrency=exalted",
                 "required": False
             },
             
